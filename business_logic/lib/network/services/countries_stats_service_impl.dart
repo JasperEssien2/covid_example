@@ -5,7 +5,7 @@ import 'package:flutter_utilities/request_utility/success/success_response.dart'
 import 'package:flutter_utilities/utilities.dart';
 
 class CountriesStatsServiceImpl extends CountriesStatsService {
-  final DioRequestHelper requestHelper;
+  final DioHttpHelper requestHelper;
 
   CountriesStatsServiceImpl({required this.requestHelper});
   @override
@@ -13,7 +13,7 @@ class CountriesStatsServiceImpl extends CountriesStatsService {
     return ApiConsumerHelper.instance.simplifyApiRequest(
       () => requestHelper.get(covidEndpoints.dailyReportAllCountries),
       successResponse: (json) => SuccessResponse(
-        (json as List).map((e) => Country.fromMap(e)).toList(),
+        (json as List).map((e) => CountryStats.fromMap(e)).toList(),
       ),
     );
   }
@@ -24,7 +24,7 @@ class CountriesStatsServiceImpl extends CountriesStatsService {
       () => requestHelper.get(covidEndpoints.dailyReportAllCountries,
           queryParameters: {'it': code}),
       successResponse: (json) => SuccessResponse(
-        (json as List).map((e) => Country.fromMap(e)).toList(),
+        (json as List).map((e) => CountryStats.fromMap(e)).toList(),
       ),
     );
   }
@@ -35,7 +35,7 @@ class CountriesStatsServiceImpl extends CountriesStatsService {
       () => requestHelper.get(covidEndpoints.dailyReportByCountryName,
           queryParameters: {'name': name}),
       successResponse: (json) => SuccessResponse(
-        (json as List).map((e) => Country.fromMap(e)).toList(),
+        (json as List).map((e) => CountryStats.fromMap(e)).toList(),
       ),
     );
   }

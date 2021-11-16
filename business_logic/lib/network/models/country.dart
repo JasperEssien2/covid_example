@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class Country extends Equatable {
+class CountryStats extends Equatable {
   final String country;
   final String code;
   final int confirmed;
@@ -12,7 +12,7 @@ class Country extends Equatable {
   final double lastChange;
   final double lastUpdate;
 
-  const Country({
+  const CountryStats({
     required this.country,
     required this.code,
     required this.confirmed,
@@ -25,7 +25,7 @@ class Country extends Equatable {
     required this.lastUpdate,
   });
 
-  Country copyWith({
+  CountryStats copyWith({
     String? country,
     String? code,
     int? confirmed,
@@ -37,7 +37,7 @@ class Country extends Equatable {
     double? lastChange,
     double? lastUpdate,
   }) {
-    return Country(
+    return CountryStats(
       country: country ?? this.country,
       code: code ?? this.code,
       confirmed: confirmed ?? this.confirmed,
@@ -82,7 +82,7 @@ class Country extends Equatable {
     };
   }
 
-  Country.fromMap(Map<String, dynamic> map)
+  CountryStats.fromMap(Map<String, dynamic> map)
       : country = map['country'],
         code = map['code'],
         confirmed = map['confirmed'],
@@ -93,4 +93,16 @@ class Country extends Equatable {
         longitude = map['longitude'],
         lastChange = map['lastChange'],
         lastUpdate = map['lastUpdate'];
+
+  const CountryStats.dummy()
+      : country = "Nigeria",
+        code = "NG",
+        confirmed = 100,
+        recovered = 100,
+        critical = 300,
+        deaths = 1,
+        latitude = 0,
+        longitude = 10,
+        lastChange = 0,
+        lastUpdate = 0;
 }
