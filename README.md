@@ -6,15 +6,17 @@ This is a simple application that shows how i structure my flutter application, 
 
 ## Table of contents
 1. [Getting Started](#getting_started)
- 
-2. [Libraries Used](#libraries_used)
 
-3. [Folder Structure](#folder_structure)
+2. [Entities Used](#entities_used)
+ 
+3. [Libraries Used](#libraries_used)
+
+4. [Folder Structure](#folder_structure)
     - [Root Level](#folder_structure_root_level)
     - [Business Logic](#folder_structure_business_logic)
     - [Lib](#folder_structure_lib)
 
-4. [Demisifying Business Logic](#demisify_business_logic)
+5. [Demisifying Business Logic](#demisify_business_logic)
 
 ## Getting Started <a name ="getting_started"/>
 
@@ -29,6 +31,10 @@ Download or clone this repo by using the link below
 Go to projects root and execute the following command in console to get the required dependencies:
 
 `flutter pub get`
+
+## Entities Used <a name = "entities_used">
+* [Design Used](https://dribbble.com/shots/11015463-Covid-19-App-Free)
+* [API endpoint](https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/)
 
 ## Libraries Used  <a name ="libraries_used"/>
 * [Flutter Utilities](https://github.com/JasperEssien2/flutter-utilities.git) Helper in util library, helps in facilitating and making api calls, cubit, viewmodel implementation cleaner and easier
