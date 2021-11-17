@@ -1,11 +1,12 @@
-String BASE_URL = "https://covid-19-data.p.rapidapi.com/";
+// ignore: non_constant_identifier_names
+String BASE_URL =
+    "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/";
 
-class _Covid{
-  String get latestAllCountries => "${BASE_URL}country/all";
+class _Covid {
+  String reportByCountry(String name, String iso) =>
+      "${BASE_URL}npm-covid-data/country-report-iso-based/$name/$iso";
 
-  String get dailyReportAllCountries => "${BASE_URL}report/country/all";
-
-  String get dailyReportByCountryName => "${BASE_URL}report/country/name";
+  String sixMonthStatsForCountry(String iso) => "${BASE_URL}covid-ovid-data/sixmonth/$iso";
 }
 
 final covidEndpoints = _Covid();

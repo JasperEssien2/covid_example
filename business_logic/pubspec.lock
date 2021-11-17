@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "29.0.0"
+    version: "30.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.0"
+    version: "2.7.0"
   args:
     dependency: transitive
     description:
@@ -140,7 +140,7 @@ packages:
       name: dio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "4.0.3"
   equatable:
     dependency: transitive
     description:
@@ -180,7 +180,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.3.1"
+    version: "7.3.3"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -198,7 +198,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: b1336b8e583546fc26766c79c557a0d0f5c0b9db
+      resolved-ref: "9165de33334ce2ce7cf12b7fa69711e65d7abcdd"
       url: "https://github.com/JasperEssien2/flutter-utilities.git"
     source: git
     version: "1.0.0"
@@ -214,6 +214,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  get_it:
+    dependency: "direct main"
+    description:
+      name: get_it
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.2.0"
   glob:
     dependency: transitive
     description:
@@ -235,6 +242,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.0"
   io:
     dependency: transitive
     description:
@@ -325,7 +339,7 @@ packages:
       name: path_provider_linux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.2"
   path_provider_platform_interface:
     dependency: transitive
     description:
@@ -339,7 +353,7 @@ packages:
       name: path_provider_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.4"
   pedantic:
     dependency: transitive
     description:
@@ -402,7 +416,7 @@ packages:
       name: shared_preferences_linux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   shared_preferences_macos:
     dependency: transitive
     description:
@@ -430,7 +444,7 @@ packages:
       name: shared_preferences_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   shelf:
     dependency: transitive
     description:
@@ -554,7 +568,7 @@ packages:
       name: vm_service
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.3.0"
+    version: "7.4.0"
   watcher:
     dependency: transitive
     description:
@@ -582,7 +596,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.10"
+    version: "2.3.0"
   xdg_directories:
     dependency: transitive
     description:

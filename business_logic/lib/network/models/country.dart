@@ -1,108 +1,89 @@
 import 'package:equatable/equatable.dart';
 
 class CountryStats extends Equatable {
-  final String country;
-  final String code;
-  final int confirmed;
-  final int recovered;
-  final int critical;
-  final int deaths;
-  final double latitude;
-  final double longitude;
-  final double lastChange;
-  final double lastUpdate;
+  final String? country;
+  final String? code;
+  final int? active;
+  final int? recovered;
+  final int? critical;
+  final int? deaths;
+  final int? totalCases;
+  final String? date;
 
   const CountryStats({
     required this.country,
     required this.code,
-    required this.confirmed,
+    required this.active,
     required this.recovered,
     required this.critical,
     required this.deaths,
-    required this.latitude,
-    required this.longitude,
-    required this.lastChange,
-    required this.lastUpdate,
+    required this.date,
+    required this.totalCases,
   });
 
   CountryStats copyWith({
     String? country,
     String? code,
-    int? confirmed,
+    int? active,
+    int? totalCases,
     int? recovered,
     int? critical,
     int? deaths,
-    double? latitude,
-    double? longitude,
-    double? lastChange,
-    double? lastUpdate,
+    String? date,
   }) {
     return CountryStats(
       country: country ?? this.country,
       code: code ?? this.code,
-      confirmed: confirmed ?? this.confirmed,
+      active: active ?? this.active,
       recovered: recovered ?? this.recovered,
       critical: critical ?? this.critical,
       deaths: deaths ?? this.deaths,
-      latitude: latitude ?? this.latitude,
-      longitude: longitude ?? this.longitude,
-      lastChange: lastChange ?? this.lastChange,
-      lastUpdate: lastUpdate ?? this.lastUpdate,
+      date: date,
+      totalCases: totalCases ?? this.totalCases,
     );
   }
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       country,
       code,
-      confirmed,
+      active,
       recovered,
       critical,
+      totalCases,
       deaths,
-      latitude,
-      longitude,
-      lastChange,
-      lastUpdate,
+      date,
     ];
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'country': country,
-      'code': code,
-      'confirmed': confirmed,
-      'recovered': recovered,
-      'critical': critical,
-      'deaths': deaths,
-      'latitude': latitude,
-      'longitude': longitude,
-      'lastChange': lastChange,
-      'lastUpdate': lastUpdate,
-    };
-  }
+  CountryStats.fromJson(Map<String, dynamic> map)
+      : country = map['Country'],
+        code = map['TwoLetterSymbol'],
+        active = map['ActiveCases'] == null ? 0 : int.parse(map['ActiveCases']),
+        totalCases = map['TotalCases'] == null ? 0 : int.parse(map['TotalCases'] ?? 0),
+        recovered =map['TotalRecovered'] == null ? 0 : int.parse(map['TotalRecovered'] ?? 0),
+        critical = map['Serious_Critical'] == null ? 0 :int.parse(map['Serious_Critical'] ?? 0),
+        date = map['date'],
+        deaths = map['TotalDeaths'] == null ? 0 :int.parse(map['TotalDeaths'] ?? 0);
 
-  CountryStats.fromMap(Map<String, dynamic> map)
-      : country = map['country'],
-        code = map['code'],
-        confirmed = map['confirmed'],
-        recovered = map['recovered'],
-        critical = map['critical'],
-        deaths = map['deaths'],
-        latitude = map['latitude'],
-        longitude = map['longitude'],
-        lastChange = map['lastChange'],
-        lastUpdate = map['lastUpdate'];
+  CountryStats.fromJsonStats(Map<String, dynamic> map)
+      : country = map['Country'],
+        code = map['symbol'],
+        active = map['ActiveCases'],
+        totalCases = map['total_cases'],
+        recovered = map['TotalRecovered'],
+        critical = map['Serious_Critical'],
+        date = map['date'],
+        deaths = map['total_deaths'];
 
   const CountryStats.dummy()
       : country = "Nigeria",
         code = "NG",
-        confirmed = 100,
+        date = null,
+        active = 100,
         recovered = 100,
         critical = 300,
-        deaths = 1,
-        latitude = 0,
-        longitude = 10,
-        lastChange = 0,
-        lastUpdate = 0;
+        totalCases = 30,
+        deaths = 1;
 }

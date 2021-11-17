@@ -8,34 +8,23 @@ class CountriesStatsServiceImpl extends CountriesStatsService {
   final DioHttpHelper requestHelper;
 
   CountriesStatsServiceImpl({required this.requestHelper});
+
   @override
-  Future<SuccessResponse> getLatestAllCountries() {
+  Future<SuccessResponse> getCountryStatsByCountry(String name, String iso) {
     return ApiConsumerHelper.instance.simplifyApiRequest(
-      () => requestHelper.get(covidEndpoints.dailyReportAllCountries),
+      () => requestHelper.get(covidEndpoints.reportByCountry(name, iso)),
       successResponse: (json) => SuccessResponse(
-        (json as List).map((e) => CountryStats.fromMap(e)).toList(),
+        (json as List).map((e) => CountryStats.fromJson(e)).toList(),
       ),
     );
   }
 
   @override
-  Future<SuccessResponse> getLatestCountryDataByCode(String code) {
+  Future<SuccessResponse> getSixMonthsCountryStatsByCountry(String iso) {
     return ApiConsumerHelper.instance.simplifyApiRequest(
-      () => requestHelper.get(covidEndpoints.dailyReportAllCountries,
-          queryParameters: {'it': code}),
+      () => requestHelper.get(covidEndpoints.sixMonthStatsForCountry(iso)),
       successResponse: (json) => SuccessResponse(
-        (json as List).map((e) => CountryStats.fromMap(e)).toList(),
-      ),
-    );
-  }
-
-  @override
-  Future<SuccessResponse> getLatestCountryDataByName(String name) {
-    return ApiConsumerHelper.instance.simplifyApiRequest(
-      () => requestHelper.get(covidEndpoints.dailyReportByCountryName,
-          queryParameters: {'name': name}),
-      successResponse: (json) => SuccessResponse(
-        (json as List).map((e) => CountryStats.fromMap(e)).toList(),
+        (json as List).map((e) => CountryStats.fromJsonStats(e)).toList(),
       ),
     );
   }

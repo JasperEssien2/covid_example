@@ -10,16 +10,19 @@ class MockCountryStatsServices extends Mock
 main() {
   late FakeCountryStatsServices services;
   late MockCountryStatsServices mockedService;
+  late CountryStatsViewModel viewModel;
   late CountryStatsCubit countryStatsCubit;
 
-  BaseObjectCubitTestHelper<CountryStatsCubit, CountryStats> testHelper =
-      BaseObjectCubitTestHelper<CountryStatsCubit, CountryStats>();
+  BaseListCubitTestHelper<CountryStatsCubit, CountryStats> testHelper =
+      BaseListCubitTestHelper<CountryStatsCubit, CountryStats>();
 
   testHelper.setUp(
     () {
       services = FakeCountryStatsServices();
+      viewModel = CountryStatsViewModel();
       mockedService = MockCountryStatsServices();
-      countryStatsCubit = CountryStatsCubit(service: services);
+      countryStatsCubit =
+          CountryStatsCubit(service: services, viewModel: viewModel);
     },
   );
 
@@ -31,22 +34,35 @@ main() {
       group(
         "Test logic",
         () {
-          testHelper.testBaseObjectSuccess(
+          testHelper.testBaseListLoadingEmptySuccess(
+            whenText:
+                " fetchStatsByCountry() called and request was successful",
+            build: () {
+              services.dataToReturn = [];
+              return countryStatsCubit;
+            },
+            act: (cubit) => cubit.fetchStatsByCountry('Nigeria', "NGA"),
+            verify: (cubit) => null,
+            viewModelListExpected: [],
+          );
+
+          testHelper.testInitialBaseListSuccess(
             whenText:
                 " fetchStatsByCountryCode() called and request was successful",
             build: () => countryStatsCubit,
-            act: (cubit) => cubit.fetchStatsByCountryCode('NG'),
+            act: (cubit) => cubit.fetchStatsByCountry('Nigeria', "NGA"),
             verify: (cubit) => null,
-            objectExpected: const CountryStats.dummy(),
+            viewModelListExpected: _dummyCountryList,
+            cubitListExpected: _dummyCountryList,
           );
 
-          testHelper.testBaseObjectError(
-            whenText: " fetchStatsByCountryCode() called and request failed",
+          testHelper.testInitialBaseListError(
+            whenText: " fetchStatsByCountry() called and request failed",
             build: () {
               services.returnSucces = false;
               return countryStatsCubit;
             },
-            act: (cubit) => cubit.fetchStatsByCountryCode('NG'),
+            act: (cubit) => cubit.fetchStatsByCountry('Nigeria', "NG"),
             verify: (cubit) => null,
             error: "An error occurred",
           );
@@ -56,19 +72,21 @@ main() {
       group(
         "Test api calls",
         () {
-          testHelper.testBaseObjectSuccess(
+          testHelper.testInitialBaseListSuccess(
             whenText:
-                " fetchStatsByCountryCode() called and request was successful "
-                "Ensure country code is passed to service.getLatestCountryDataByCode()",
+                " fetchStatsByCountryCode() called and request was successful"
+                "Ensure country name and iso is passed to service.getCountryStatsByCountry() ",
             build: () {
               _setupMockedService(mockedService);
-              countryStatsCubit = CountryStatsCubit(service: mockedService);
+              countryStatsCubit = CountryStatsCubit(
+                  service: mockedService, viewModel: viewModel);
               return countryStatsCubit;
             },
-            act: (cubit) => cubit.fetchStatsByCountryCode('NG'),
-            verify: (cubit) =>
-                verify(() => mockedService.getLatestCountryDataByCode("NG")),
-            objectExpected: const CountryStats.dummy(),
+            act: (cubit) => cubit.fetchStatsByCountry('Nigeria', "NGA"),
+            verify: (cubit) => verify(
+                () => mockedService.getCountryStatsByCountry("Nigeria", "NGA")),
+            viewModelListExpected: _dummyCountryList,
+            cubitListExpected: _dummyCountryList,
           );
         },
       );
@@ -76,27 +94,41 @@ main() {
   );
 
   group(
-    "Test fetchStatsByCountryName()",
+    "Test fetchSixMonthsStatsByCountry()",
     () {
       group(
         "Test logic",
         () {
-          testHelper.testBaseObjectSuccess(
+          testHelper.testBaseListLoadingEmptySuccess(
             whenText:
-                " fetchStatsByCountryName() called and request was successful",
-            build: () => countryStatsCubit,
-            act: (cubit) => cubit.fetchStatsByCountryName('Nigeria'),
+                " fetchSixMonthsStatsByCountry() called and request was successful",
+            build: () {
+              services.dataToReturn = [];
+              return countryStatsCubit;
+            },
+            act: (cubit) => cubit.fetchSixMonthsStatsByCountry("NGA"),
             verify: (cubit) => null,
-            objectExpected: const CountryStats.dummy(),
+            viewModelListExpected: [],
           );
 
-          testHelper.testBaseObjectError(
-            whenText: " fetchStatsByCountryName() called and request failed",
+          testHelper.testInitialBaseListSuccess(
+            whenText:
+                " fetchSixMonthsStatsByCountry() called and request was successful",
+            build: () => countryStatsCubit,
+            act: (cubit) => cubit.fetchSixMonthsStatsByCountry("NGA"),
+            verify: (cubit) => null,
+            viewModelListExpected: _dummyCountryList,
+            cubitListExpected: _dummyCountryList,
+          );
+
+          testHelper.testInitialBaseListError(
+            whenText:
+                " fetchSixMonthsStatsByCountry() called and request failed",
             build: () {
               services.returnSucces = false;
               return countryStatsCubit;
             },
-            act: (cubit) => cubit.fetchStatsByCountryName('Nigeria'),
+            act: (cubit) => cubit.fetchSixMonthsStatsByCountry("NG"),
             verify: (cubit) => null,
             error: "An error occurred",
           );
@@ -106,30 +138,80 @@ main() {
       group(
         "Test api calls",
         () {
-          testHelper.testBaseObjectSuccess(
+          testHelper.testInitialBaseListSuccess(
             whenText:
-                " fetchStatsByCountryName() called and request was successful "
-                "Ensure country name is passed to service.getLatestCountryDataByName()",
+                " fetchSixMonthsStatsByCountry() called and request was successful"
+                "Ensure country iso is passed to service.getSixMonthsCountryStatsByCountry() ",
             build: () {
               _setupMockedService(mockedService);
-              countryStatsCubit = CountryStatsCubit(service: mockedService);
+              countryStatsCubit = CountryStatsCubit(
+                  service: mockedService, viewModel: viewModel);
               return countryStatsCubit;
             },
-            act: (cubit) => cubit.fetchStatsByCountryName('Nigeria'),
+            act: (cubit) => cubit.fetchSixMonthsStatsByCountry("NGA"),
             verify: (cubit) => verify(
-                () => mockedService.getLatestCountryDataByName("Nigeria")),
-            objectExpected: const CountryStats.dummy(),
+                () => mockedService.getSixMonthsCountryStatsByCountry("NGA")),
+            viewModelListExpected: _dummyCountryList,
+            cubitListExpected: _dummyCountryList,
           );
+        },
+      );
+    },
+  );
+
+  group(
+    "Test getTotalAndDeathStatistics()",
+    () {
+      test(
+        "Ensure that entries with in the format of month: (total cases, deaths) "
+        "Ensure that entries with same month is summed up (total cases, deaths) "
+        "when getTotalAndDeathStatistics() called and list is not empty",
+        () {
+          viewModel.itemList = _dummyCountryListForStats;
+
+          expect(countryStatsCubit.getTotalAndDeathStatistics(), {
+            "Oct": {60, 5},
+            "Nov": {210, 450},
+          });
+        },
+      );
+
+      test(
+        "Ensure that maps returns empty  when date of an entry is null",
+        () {
+          viewModel.itemList = _dummyCountryList;
+
+          expect(countryStatsCubit.getTotalAndDeathStatistics(), {});
+        },
+      );
+
+      test(
+        "Ensure that maps returns empty  when itemList is emptu",
+        () {
+          viewModel.itemList = [];
+
+          expect(countryStatsCubit.getTotalAndDeathStatistics(), {});
         },
       );
     },
   );
 }
 
-void _setupMockedService(MockCountryStatsServices mockedService) {
-  when(() => mockedService.getLatestCountryDataByCode(any())).thenAnswer(
-      (_) => Future.value(SuccessResponse(const CountryStats.dummy())));
+List<CountryStats> get _dummyCountryList => const [CountryStats.dummy()];
 
-  when(() => mockedService.getLatestCountryDataByName(any())).thenAnswer(
-      (_) => Future.value(SuccessResponse(const CountryStats.dummy())));
+List<CountryStats> get _dummyCountryListForStats => [
+      const CountryStats.dummy()
+          .copyWith(deaths: 400, totalCases: 200, date: "2021-11-5"),
+      const CountryStats.dummy()
+          .copyWith(deaths: 50, totalCases: 10, date: "2021-11-15"),
+      const CountryStats.dummy()
+          .copyWith(deaths: 5, totalCases: 60, date: "2021-10-2"),
+    ];
+
+void _setupMockedService(MockCountryStatsServices mockedService) {
+  when(() => mockedService.getCountryStatsByCountry(any(), any()))
+      .thenAnswer((_) => Future.value(SuccessResponse(_dummyCountryList)));
+
+  when(() => mockedService.getSixMonthsCountryStatsByCountry(any()))
+      .thenAnswer((_) => Future.value(SuccessResponse(_dummyCountryList)));
 }

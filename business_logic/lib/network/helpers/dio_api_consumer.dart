@@ -1,4 +1,3 @@
-import 'package:dio/src/response.dart';
 import 'package:flutter_utilities/utilities.dart';
 
 class ApiConsumerHelper extends DioApiConsumption {
