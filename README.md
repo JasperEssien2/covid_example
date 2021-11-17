@@ -1,6 +1,6 @@
 # covid_example
 
-This is a simple application that shows how i structure my flutter application, how i make api calls ect. Basically shows my coding pattern on projects
+This is a simple application that shows how i structure my flutter application, how i make api calls ect. Basically shows my coding pattern on projects.
 
 ## Table of contents
 1. [Getting Started](#getting_started)
@@ -29,12 +29,12 @@ Go to projects root and execute the following command in console to get the requ
 `flutter pub get`
 
 ## Libraries Used  <a name ="libraries_used"/>
-* [Flutter Utilities](https://github.com/JasperEssien2/flutter-utilities.git) Making api calls, cubit, viewmodel and storage implementation cleaner and easier
+* [Flutter Utilities](https://github.com/JasperEssien2/flutter-utilities.git) Helper in util library, helps in facilitating and making api calls, cubit, viewmodel implementation cleaner and easier
 * [Dio](https://pub.dev/packages/dio) For api calls
 * [Flutter Bloc](https://pub.dev/packages/flutter_bloc) For app state management
 * [Stacked](https://pub.dev/packages/stacked) Handling reactive data
-* [SharedPreference](https://pub.dev/packages/shared_preferences) for shared preference
 * [GetIt](https://pub.dev/packages/get_it) For dependency injection
+* [Fl Chart](https://pub.dev/packages/fl_chart) Used in displayin the barchart
 * [Shimmer](https://pub.dev/packages/shimmer) for animation loading state
 
 ## Folder Structure  <a name ="folder_structure"/>
@@ -93,8 +93,6 @@ Go to projects root and execute the following command in console to get the requ
     |- theme
     |    |_ colors.dart
     |- utils
-    |    |_ home_widget_util.dart       (# contains logic determining home widget)
-    |    |_ image_util.dart             (# contains all image assets assigned to variables)
     |    |_ intl_util.dart
     |    |_ widget_utils.dart           (# contains widget components that can be reused, like box-decoration, loading widget, flutter-toast)
     |    |_ utils_export.dart
