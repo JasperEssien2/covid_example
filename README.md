@@ -2,6 +2,8 @@
 
 This is a simple application that shows how i structure my flutter application, how i make api calls ect. Basically shows my coding pattern on projects.
 
+<img src="https://github.com/JasperEssien2/covid_example/blob/master/visuals/WhatsApp%20Video%202021-11-17%20at%2022.15.48.gif" width="300" height="640">
+
 ## Table of contents
 1. [Getting Started](#getting_started)
  
@@ -67,6 +69,11 @@ Go to projects root and execute the following command in console to get the requ
     |- network
     |    |- base
     |        |_endpoints.dart
+         |_ helpers
+             |_ dio_api_consumer.dart
+             |_ dio_requests_helper.dart
+             |_ helpers_exports.dart
+             
     |    |- models
     |    |- services
     |        |_ feature_service.dart
@@ -114,3 +121,69 @@ Go to projects root and execute the following command in console to get the requ
     
 ### Demisifying Business Login <a name = "demisify_business_logic"/>
 > This section contains documentation of all pratices, structure and helper code used in this codebase, including but not limited to api consumption helpers, actual api consumption, cubit helpers, actual cubit implementation, view model helpers, actual view model implementation.
+
+#### Network Section
+This section highlights how network calls is being handled.
+
+##### DioRequestHelper
+> DioRequestHelper extends from DioHttpHelper, the headers() and interceptors() methods are overidden, the headers is where endpoint headers are set. If api calls need to be intercepted, the interceptors method returns a nullable list of interceptors. This class exposes methods for GET, POST, PATCH, DELETE of api calls.
+ 
+```dart
+class DioRequestHelper extends DioHttpHelper {
+  @override
+  Future<Map<String, String>> get headers async {
+    return {
+      'x-rapidapi-host':
+          'vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com',
+      'x-rapidapi-key': dotenv.env['RAPID_KEY'] ?? '',
+    };
+  }
+
+  @override
+  List<Interceptor>? get interceptiors => null;
+}
+```
+
+##### ApiConsumerHelper
+> ApiConsumerHelper extends DioApiConsumption, and only the parseErrorResponse need to be implemented, this is where error is being passed based on the API endpoint error response. Under the hood, DioApiConsumption handles making the actual api request, checking for success or failures, if the request fails an exception is thrown, if not SuccessResponse is returned. This relies on the DioHttpHelper class where to call (GET, POST, PATCH, DELETE requests)
+
+```dart
+import 'package:flutter_utilities/utilities.dart';
+
+class ApiConsumerHelper extends DioApiConsumption {
+  static ApiConsumerHelper? _instance;
+
+  // ignore: unused_element
+  ApiConsumerHelper._();
+
+  static ApiConsumerHelper get instance {
+    _instance ??= ApiConsumerHelper.factory();
+    return _instance!;
+  }
+
+  ApiConsumerHelper.factory();
+
+  @override
+  ErrorResponse parseErrorFromResponse(Response requestResponse) {
+    return ErrorResponse(errorMessage: "An error occurred, please try again");
+  }
+}
+```
+
+##### Services file
+> The services file follows the OCP (Open Close Principle), and as such has an abstract class and an implementation. Below contains a sample service method.
+all service method should return a Future SuccessResponse, it uses the ApiConsumerHelper to handle the actual request, ApiConsumerHelper.simplifyApiRequest() accepts a request function (GET, DELETE, POST etc that's where the DioHttpHelper comes in), a successResponse, which passes a json and then returns a SuccessResponse, simplyApiRequest() contains other parameters via [Flutter Utilities Documentation](https://github.com/JasperEssien2/flutter-utilities.git)
+ 
+```dart
+ @override
+  Future<SuccessResponse> getCountryStatsByCountry(String name, String iso) {
+    return ApiConsumerHelper.instance.simplifyApiRequest(
+      () => dioHttpHelper.get(covidEndpoints.reportByCountry(name, iso)),
+      successResponse: (json) => SuccessResponse(
+        (json as List).map((e) => CountryStats.fromJson(e)).toList(),
+      ),
+    );
+  }
+```
+
+#### Cubit Section
