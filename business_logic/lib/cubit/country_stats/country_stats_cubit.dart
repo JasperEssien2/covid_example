@@ -58,11 +58,11 @@ class CountryStatsCubit extends BaseListCubit<CountryStats> {
         final prevValue = next[month];
 
         next[month] = {
-          (first.totalCases ?? 0) + (prevValue?.elementAt(0) ?? 0),
-          (first.deaths ?? 0) + (prevValue?.elementAt(1) ?? 0),
+          (first.newCases ?? 0) + (prevValue?.elementAt(0) ?? 0),
+          (first.newDeaths ?? 0) + (prevValue?.elementAt(1) ?? 0),
         };
       } else {
-        next[month] = {first.totalCases ?? 0, first.deaths ?? 0};
+        next[month] = {first.newCases ?? 0, first.newDeaths ?? 0};
       }
       return next;
     }

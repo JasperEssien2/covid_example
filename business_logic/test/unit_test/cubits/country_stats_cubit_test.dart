@@ -201,11 +201,11 @@ List<CountryStats> get _dummyCountryList => const [CountryStats.dummy()];
 
 List<CountryStats> get _dummyCountryListForStats => [
       const CountryStats.dummy()
-          .copyWith(deaths: 400, totalCases: 200, date: "2021-11-5"),
+          .copyWith(newDeaths: 400, newCases: 200, date: "2021-11-5"),
       const CountryStats.dummy()
-          .copyWith(deaths: 50, totalCases: 10, date: "2021-11-15"),
+          .copyWith(newDeaths: 50, newCases: 10, date: "2021-11-15"),
       const CountryStats.dummy()
-          .copyWith(deaths: 5, totalCases: 60, date: "2021-10-2"),
+          .copyWith(newDeaths: 5, newCases: 60, date: "2021-10-2"),
     ];
 
 void _setupMockedService(MockCountryStatsServices mockedService) {

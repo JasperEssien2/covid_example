@@ -35,7 +35,10 @@ class ItemTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8,
+        vertical: 12,
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(42),
         color: isSelected ? Colors.white : colorTabUnselected,

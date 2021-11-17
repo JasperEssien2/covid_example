@@ -2,9 +2,7 @@ import 'package:business_logic/business_logic_export.dart';
 import 'package:covid_example/di/di_injector_container.dart';
 import 'package:covid_example/theme/colors.dart';
 import 'package:covid_example/views/utils/item_model.dart';
-import 'package:covid_example/views/widget/item_stats_card.dart';
-import 'package:covid_example/views/widget/item_tab.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:covid_example/views/widget/widgets_export.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -54,53 +52,7 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomSheet: BlocProvider<CountryStatsCubit>(
         create: (context) => countrySixMonthStatsCubit,
-        child: BottomSheet(
-          enableDrag: false,
-          onClosing: () {},
-          constraints: BoxConstraints(maxHeight: size.height * 0.4),
-          builder: (c) {
-            var totalAndDeathMap =
-                countrySixMonthStatsCubit.getTotalAndDeathStatistics();
-            var keys = totalAndDeathMap.keys.toList();
-            return Container(
-              child: BarChart(
-                BarChartData(
-                  backgroundColor: Colors.white,
-                  borderData: FlBorderData(show: false),
-                  titlesData: FlTitlesData(
-                    bottomTitles: SideTitles(
-                      showTitles: true,
-                      getTitles: (val) {
-                        return keys[val.toInt()];
-                      },
-                    ),
-                  ),
-                  barGroups: keys
-                      .map(
-                        (e) => BarChartGroupData(
-                          x: keys.indexOf(e),
-                          barRods: [
-                            BarChartRodData(
-                              y: (totalAndDeathMap[e]?.elementAt(0) ?? 0)
-                                  .toDouble(),
-                            ),
-                            BarChartRodData(
-                              y: (totalAndDeathMap[e]?.elementAt(1) ?? 0)
-                                  .toDouble(),
-                            )
-                          ],
-                        ),
-                      )
-                      .toList(),
-                ),
-
-                swapAnimationDuration:
-                    const Duration(milliseconds: 150), // Optional
-                swapAnimationCurve: Curves.linear, // Optional
-              ),
-            );
-          },
-        ),
+        child: const BarChartBottomSheet(),
       ),
     );
   }
@@ -224,7 +176,7 @@ class _StatisticsWidget
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12).copyWith(
-        bottom: size.height * 0.42,
+        bottom: size.height * 0.43,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -310,8 +262,8 @@ class _StatisticsWidget
           isLoading: isLoading,
           color: colorActive),
       ItemModel(
-          caption: currentlySelected?.critical.toString() ?? "Serios",
-          value: 'N/A',
+          caption: "Serious",
+          value: currentlySelected?.critical.toString() ?? 'N/A',
           isLoading: isLoading,
           color: colorSerious),
     ];

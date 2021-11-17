@@ -1,10 +1,13 @@
+import 'package:business_logic/business_logic_export.dart';
 import 'package:covid_example/di/di_injector_container.dart' as injector;
 import 'package:flutter/material.dart';
 
 import 'views/home_page.dart';
 
-void main() {
+void main() async {
   injector.init();
+  await dotenv.load(fileName: ".env");
+
   runApp(const MyApp());
 }
 

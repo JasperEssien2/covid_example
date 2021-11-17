@@ -7,7 +7,9 @@ class CountryStats extends Equatable {
   final int? recovered;
   final int? critical;
   final int? deaths;
+  final int? newDeaths;
   final int? totalCases;
+  final int? newCases;
   final String? date;
 
   const CountryStats({
@@ -17,6 +19,8 @@ class CountryStats extends Equatable {
     required this.recovered,
     required this.critical,
     required this.deaths,
+    required this.newDeaths,
+    required this.newCases,
     required this.date,
     required this.totalCases,
   });
@@ -26,9 +30,11 @@ class CountryStats extends Equatable {
     String? code,
     int? active,
     int? totalCases,
+    int? newCases,
     int? recovered,
     int? critical,
     int? deaths,
+    int? newDeaths,
     String? date,
   }) {
     return CountryStats(
@@ -39,6 +45,8 @@ class CountryStats extends Equatable {
       critical: critical ?? this.critical,
       deaths: deaths ?? this.deaths,
       date: date,
+      newCases: newCases ?? this.newCases,
+      newDeaths: newDeaths ?? this.newDeaths,
       totalCases: totalCases ?? this.totalCases,
     );
   }
@@ -54,18 +62,24 @@ class CountryStats extends Equatable {
       totalCases,
       deaths,
       date,
+      newCases,
+      newDeaths
     ];
   }
 
   CountryStats.fromJson(Map<String, dynamic> map)
       : country = map['Country'],
         code = map['TwoLetterSymbol'],
-        active = map['ActiveCases'] == null ? 0 : int.parse(map['ActiveCases']),
-        totalCases = map['TotalCases'] == null ? 0 : int.parse(map['TotalCases'] ?? 0),
-        recovered =map['TotalRecovered'] == null ? 0 : int.parse(map['TotalRecovered'] ?? 0),
-        critical = map['Serious_Critical'] == null ? 0 :int.parse(map['Serious_Critical'] ?? 0),
+        active = map['ActiveCases'] ?? 0,
+        newDeaths = null,
+        newCases = null,
+        totalCases = map['TotalCases'] ?? 0,
+        recovered = map['TotalRecovered'] == null
+            ? 0
+            : int.parse(map['TotalRecovered']),
+        critical = map['Serious_Critical'] ?? 0,
         date = map['date'],
-        deaths = map['TotalDeaths'] == null ? 0 :int.parse(map['TotalDeaths'] ?? 0);
+        deaths = map['TotalDeaths'] ?? 0;
 
   CountryStats.fromJsonStats(Map<String, dynamic> map)
       : country = map['Country'],
@@ -75,6 +89,8 @@ class CountryStats extends Equatable {
         recovered = map['TotalRecovered'],
         critical = map['Serious_Critical'],
         date = map['date'],
+        newCases = map['new_cases'],
+        newDeaths = map['new_deaths'],
         deaths = map['total_deaths'];
 
   const CountryStats.dummy()
@@ -83,6 +99,8 @@ class CountryStats extends Equatable {
         date = null,
         active = 100,
         recovered = 100,
+        newDeaths = null,
+        newCases = null,
         critical = 300,
         totalCases = 30,
         deaths = 1;
