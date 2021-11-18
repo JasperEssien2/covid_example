@@ -7,7 +7,7 @@ class ApiConsumerHelper extends DioApiConsumption {
   ApiConsumerHelper._();
 
   static ApiConsumerHelper get instance {
-    _instance ??= ApiConsumerHelper.factory();
+    _instance ?? ApiConsumerHelper.factory();
     return _instance!;
   }
 
